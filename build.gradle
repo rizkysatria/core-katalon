@@ -1,0 +1,31 @@
+plugins {
+    id 'groovy'
+    id 'java-library'
+}
+
+group = 'com.ist.one.framework'
+version = '1.0.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation localGroovy()
+    compileOnly files(
+        'libs/com.kms.katalon.core_1.0.0.202511190132.jar',
+        'libs/com.kms.katalon.core.appium_1.0.0.202511190132.jar',
+        'libs/com.kms.katalon.core.mobile_1.0.0.202511190132.jar'
+    )
+}
+
+jar {
+    exclude("internal/**")
+    exclude("com/kms/**")
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
