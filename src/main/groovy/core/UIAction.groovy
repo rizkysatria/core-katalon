@@ -201,23 +201,12 @@ class UIAction {
             return
         } catch (Exception ignore) {}
 
-        // try {
-        //     waitForElementPresent(testObject, timeout)
-        //     Mobile.setText(testObject, text, timeout.seconds, FailureHandling.STOP_ON_FAILURE)
-        //     return
-        // } catch (Exception ignore) {}
+        try {
+            waitForElementPresent(testObject, timeout)
+            Mobile.setText(testObject, text, timeout.seconds, FailureHandling.STOP_ON_FAILURE)
+            return
+        } catch (Exception ignore) {}
 
-
-
-        if (MobileDriverFactory.getDriver() == null) {
-            throw new IllegalStateException("Driver is NULL before setText")
-        }
-
-        // ✅ MOBILE-VALID waits
-        Mobile.waitForElementPresent(testObject, timeout.seconds, FailureHandling.STOP_ON_FAILURE)
-        Mobile.waitForElementVisible(testObject, timeout.seconds, FailureHandling.STOP_ON_FAILURE)
-
-        // ✅ SET TEXT
         Mobile.setText(testObject, text, timeout.seconds, FailureHandling.STOP_ON_FAILURE)
     }
 
