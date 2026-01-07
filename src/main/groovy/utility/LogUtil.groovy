@@ -52,6 +52,12 @@ class LogUtil {
         }
     }
 
+    static void logAssert(Object... messages) {
+        if (debugEnabled) {
+            log("ASSERT", messages)
+        }
+    }
+
     private static void log(String level, Object... messages) {
         String timestamp = includeTimestamp ? new SimpleDateFormat("HH:mm:ss").format(new Date()) + " " : ""
         String contextPart = currentContext ? "[$currentContext] " : ""
