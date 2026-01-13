@@ -4,7 +4,7 @@ plugins {
 }
 
 group = 'com.core.katalon'
-version = '1.0.2'
+version = '2.0.1'
 
 repositories {
     mavenCentral()
@@ -17,6 +17,11 @@ dependencies {
         'libs/com.kms.katalon.core.appium_1.0.0.202511190132.jar',
         'libs/com.kms.katalon.core.mobile_1.0.0.202511190132.jar'
     )
+
+    // Selenium & Appium (used by adapters)
+    compileOnly 'org.seleniumhq.selenium:selenium-api:4.8.3'
+    compileOnly 'io.appium:java-client:8.5.1'
+    compileOnly 'junit:junit:4.13.2'
 }
 
 jar {
