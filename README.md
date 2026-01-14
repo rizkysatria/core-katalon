@@ -9,20 +9,27 @@ Library ini berisi **core logic**, **utils**, dan **abstraction layer** yang reu
 ## 📦 Project Structure
 
 ```text
-.
-├── src/
-│   └── main/
-│       └── groovy/
-│           ├── core/          # Core abstraction (driver, platform, context)
-│           ├── utils/         # Reusable utilities (scroll, wait, input, etc)
-│           ├── locator/       # Locator models / adapters
-│           └── config/        # Environment & execution config
-├── libs/                      # Output JAR (copied here after build)
-├── build/                     # Gradle build output
-├── build.gradle               # Gradle build configuration
-├── gradle/
-├── gradlew
-└── gradlew.bat
+core/
+├── adapter/                
+│   ├── android/
+│   └── ios/
+│
+├── interaction/            
+│
+├── runtime/                
+│   ├── locator/
+│   ├── profile/
+│   └── storage/
+│
+├── types/                  
+│
+├── ui/                     
+│
+├── utility/                
+│
+└── scaffold/               
+    ├── structure/         
+    └── gherkin/   
 
 
 BUILD : 
