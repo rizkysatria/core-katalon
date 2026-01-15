@@ -21,7 +21,7 @@ class ${epic}Usecase {
 
 	private final ${epic}Screen ${epicLowercase}Screen = new ${epic}Screen()
 
-    def execute() {
+	void execute() {
         // TODO: implement usecase logic
     }
 }
@@ -35,7 +35,7 @@ ${packageName}
 
 class ${epic.capitalize()}Screen {
 
-    def verifyScreen() {
+    void verifyScreen() {
         // TODO: implement screen verification
     }
 }
@@ -61,9 +61,6 @@ class ${epic}Step {
 	
 	private final ${epic}Usecase ${epicLowercase}Usecase = new ${epic}Usecase()
 
-    def givenSomething() {
-        // TODO: implement step definition
-    }
 }
 """
 	}

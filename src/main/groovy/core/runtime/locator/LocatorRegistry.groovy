@@ -27,7 +27,6 @@ class LocatorRegistry {
 
         try {
             def value = clazz."$key"
-
             if (!(value instanceof String)) {
                 throw new IllegalStateException(
                     "Locator '$key' in ${clazz.simpleName} is null or not a String"

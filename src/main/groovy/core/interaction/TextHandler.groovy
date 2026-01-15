@@ -18,7 +18,6 @@ class TextHandler {
         } catch (Exception ignore) {}
 
         try {
-            // waitForElementPresent(testObject, timeout)
             Mobile.setText(testObject, text, timeout.seconds, FailureHandling.STOP_ON_FAILURE)
             return
         } catch (Exception ignore) {}
@@ -27,28 +26,20 @@ class TextHandler {
 
     }   
 
-    static String getText(String key, String text, Timeout timeout = Timeout.VERY_SHORT) {
+    static String getText(String key, Timeout timeout = Timeout.VERY_SHORT) {
         def testObject = LocatorResolver.create(key)
-        if (waitForElementPresent(testObject, timeout)) {
-            if (ExecutionProfile.isIOS) {
-                String value = Mobile.getAttribute(testObject, "value", timeout.seconds, FailureHandling.OPTIONAL)
-                LogUtil.info("Get Text:", key, "=", value)
-                return value
-            } else {
-                String value = Mobile.getText(testObject, timeout.seconds, FailureHandling.STOP_ON_FAILURE)
-                LogUtil.info("Get Text:", key, "=", value)
-                return value
-            }
+        if (ExecutionProfile.isIOS()) {
+            String value = Mobile.getAttribute(testObject, "value", timeout.seconds, FailureHandling.OPTIONAL)
+            return value
+        } else {
+            String value = Mobile.getText(testObject, timeout.seconds, FailureHandling.STOP_ON_FAILURE)
+            return value
         }
-        return null
     } 
 
     static void clearText(String key, Timeout timeout = Timeout.MEDIUM) {
         def testObject = LocatorResolver.create(key)
-        if (waitForElementPresent(testObject, timeout)) {
-            Mobile.clearText(testObject, timeout.seconds, FailureHandling.STOP_ON_FAILURE)
-            LogUtil.info("Clear Text:", key)
-        }
+        Mobile.clearText(testObject, timeout.seconds, FailureHandling.STOP_ON_FAILURE)
     }
 
 }
