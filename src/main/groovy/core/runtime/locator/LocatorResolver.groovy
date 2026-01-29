@@ -25,6 +25,8 @@ public class LocatorResolver {
     private static void applyAndroidLocator(TestObject to, String locator) {
         if (locator?.startsWith("//") || locator?.startsWith("(")) {
             to.addProperty("xpath", ConditionType.EQUALS, locator)
+        } else if (locator?.contains("new UiSelector")) {
+            to.addProperty("-android uiautomator", ConditionType.EQUALS, locator)
         } else if (locator?.startsWith("id=")) {
             to.addProperty("resource-id", ConditionType.EQUALS, locator.replace("id=", ""))
         } else if (locator?.contains(":id/")) {

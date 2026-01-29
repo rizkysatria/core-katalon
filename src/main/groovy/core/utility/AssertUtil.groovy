@@ -29,6 +29,19 @@ class AssertUtil {
         }
     }
 
+    static void assertNotEquals(Object actual, Object expected, String message = "") {
+        try {
+            assert actual != expected
+            LogUtil.infoAssert("PASSED", message)
+        } catch (AssertionError e) {
+            LogUtil.infoAssertFailed(
+                "FAILED",
+                "Expected=${expected}, Actual=${actual}. ${message}"
+            )
+            throw e
+        }
+    }
+
     static void assertContains(String actual, String expected, String message = "") {
         try {
             assert actual != null
@@ -42,5 +55,20 @@ class AssertUtil {
             throw e
         }
     }
+
+    static void assertNotContains(String actual, String expected, String message = "") {
+        try {
+            assert actual != null
+            assert !actual.contains(expected)
+            LogUtil.infoAssert("PASSED", message)
+        } catch (AssertionError e) {
+            LogUtil.infoAssertFailed(
+                "FAILED",
+                "Expected '${actual}' not contain '${expected}'. ${message}"
+            )
+            throw e
+        }
+    }
+
 
 }
