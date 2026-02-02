@@ -4,11 +4,13 @@ class TemplateFactory {
 
 	static String usecaseTemplate(String featureName, String epic, Boolean withFolder = true) {
 		String epicLowercase = epic.toLowerCase()
-		String packageNamePath = "features.${featureName.toLowerCase()}.${epicLowercase}"
+		String epicCamelCase = toCamelCase(epic)
+		String featureCamelCase = toCamelCase(featureName)
+		String packageNamePath = "features.${featureCamelCase}.${epicCamelCase}"
 		String importScreenPath = "${packageNamePath}.${epic}Screen"
 
 		if (withFolder) {
-			packageNamePath = "features.${featureName.toLowerCase()}.${epicLowercase}.usecase"
+			packageNamePath = "features.${featureCamelCase}.${epicCamelCase}.usecase"
 			importScreenPath =  "features.${epicLowercase}.screen.${epic}Screen"
 		}
 
@@ -19,7 +21,7 @@ import ${importScreenPath}
 
 class ${epic}Usecase {
 
-	private final ${epic}Screen ${epicLowercase}Screen = new ${epic}Screen()
+	private final ${epic}Screen ${epicCamelCase}Screen = new ${epic}Screen()
 
 	void execute() {
         // TODO: implement usecase logic
@@ -44,24 +46,31 @@ class ${epic.capitalize()}Screen {
 
 	static String stepTemplate(String featureName, String epic, Boolean withFolder = true) {
 		String epicLowercase = epic.toLowerCase()
-		String packageNamePath = "features.${featureName.toLowerCase()}.${epic.toLowerCase()}"
+		String epicCamelCase = toCamelCase(epic)
+		String featureCamelCase = toCamelCase(featureName)
+		String packageNamePath = "features.${featureCamelCase}.${epicCamelCase}"
 		String importUsecasePath = "${packageNamePath}.${epic}Usecase"
 
 		if (withFolder) {
-			packageNamePath = "features.${featureName.toLowerCase()}.${epic.toLowerCase()}.stepDef"
+			packageNamePath = "features.${featureCamelCase}.${epic.toLowerCase()}.stepDef"
 			importUsecasePath = "features.${epicLowercase}.usecase.${epic}Usecase"
 		}
 
-		return """
+		return """	
 package ${packageNamePath}
 
 import ${importUsecasePath}
 
 class ${epic}Step {
 	
-	private final ${epic}Usecase ${epicLowercase}Usecase = new ${epic}Usecase()
+	private final ${epic}Usecase ${epicCamelCase}Usecase = new ${epic}Usecase()
 
 }
 """
+	}
+
+	private static String toCamelCase(String input) {
+		if (!input) return input
+			return input[0].toLowerCase() + input.substring(1)
 	}
 }

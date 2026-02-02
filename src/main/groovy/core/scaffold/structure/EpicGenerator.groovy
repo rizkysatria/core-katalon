@@ -7,7 +7,8 @@ import com.kms.katalon.core.annotation.Keyword
 class EpicGenerator {
 
 	static void generate(String featureName, String epicName, Boolean withFolder = true) {
-		String epicBase = PathResolver.epicBasePath(featureName, epicName.toLowerCase())
+		String epicToCamelCase = toCamelCase(epicName)
+		String epicBase = PathResolver.epicBasePath(featureName, epicToCamelCase)
 		if (withFolder) {
 			generateWithFolder(featureName, epicBase, epicName)
 		} else {
@@ -51,5 +52,10 @@ class EpicGenerator {
 
 		new File(stepDir, "${epic}Step.groovy")
 				.text = TemplateFactory.stepTemplate(featureName, epic)
+	}
+
+	private static String toCamelCase(String input) {
+		if (!input) return input
+			return input[0].toLowerCase() + input.substring(1)
 	}
 }
