@@ -7,13 +7,12 @@ import core.runtime.profile.ExecutionProfile
 import core.types.Platform
 import core.runtime.locator.LocatorRegistry
 
-
 public class LocatorResolver {
 
     static TestObject create(String key) {
         def testObject = new TestObject()
         def locator = LocatorRegistry.resolve(key)
-        def platform = ExecutionProfile.getPlatform()
+        def platform = ExecutionProfile.getPlatform()   
         if (platform == Platform.IOS) {
             applyIOSLocator(testObject, locator)
         } else {
@@ -43,25 +42,28 @@ public class LocatorResolver {
     }
     
     private static void applyIOSLocator(TestObject to, String locator) {
-        if (locator?.startsWith("//") || locator?.startsWith("(")) {
+        if (!locator) return
+
+        if (locator.startsWith("//") || locator.startsWith("(")) {
             to.addProperty("xpath", ConditionType.EQUALS, locator)
             return
         }
+
         if (isIOSAccessibilityId(locator)) {
             to.addProperty("name", ConditionType.EQUALS, locator)
             return
         }
-        to.addProperty(
-            "-ios predicate string",
-            ConditionType.EQUALS,
-            """
-            (
-                (type == 'XCUIElementTypeButton' AND (label == '${locator}' OR name == '${locator}'))
-                OR
-                (type IN {'XCUIElementTypeTextField','XCUIElementTypeSecureTextField'} AND name == '${locator}')
-            )
-            """.stripIndent().trim()
-        )
+
+        String classChain = """
+        **/*[
+            label == '${locator}'
+            OR name == '${locator}'
+            OR value == '${locator}'
+            OR placeholderValue == '${locator}'
+        ]
+        """.stripIndent().trim()
+
+        to.addProperty("-ios class chain", ConditionType.EQUALS, classChain)
     }
 
 

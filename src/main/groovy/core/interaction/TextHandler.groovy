@@ -7,6 +7,7 @@ import core.runtime.locator.LocatorResolver
 import core.runtime.profile.ExecutionProfile
 import core.types.Timeout
 import core.utility.LogUtil
+import core.adapter.ios.IOSUIResolver
 
 class TextHandler {
     
@@ -29,8 +30,7 @@ class TextHandler {
     static String getText(String key, Timeout timeout = Timeout.VERY_SHORT) {
         def testObject = LocatorResolver.create(key)
         if (ExecutionProfile.isIOS()) {
-            String value = Mobile.getAttribute(testObject, "value", timeout.seconds, FailureHandling.OPTIONAL)
-            return value
+            return IOSUIResolver.getText(testObject, timeout.seconds)
         } else {
             String value = Mobile.getText(testObject, timeout.seconds, FailureHandling.STOP_ON_FAILURE)
             return value
