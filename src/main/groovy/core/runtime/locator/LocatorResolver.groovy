@@ -48,27 +48,7 @@ public class LocatorResolver {
             to.addProperty("xpath", ConditionType.EQUALS, locator)
             return
         }
-
-        if (isIOSAccessibilityId(locator)) {
-            to.addProperty("name", ConditionType.EQUALS, locator)
-            return
-        }
-
-        String classChain = """
-        **/*[
-            label == '${locator}'
-            OR name == '${locator}'
-            OR value == '${locator}'
-            OR placeholderValue == '${locator}'
-        ]
-        """.stripIndent().trim()
-
-        to.addProperty("-ios class chain", ConditionType.EQUALS, classChain)
-    }
-
-
-    private static boolean isIOSAccessibilityId(String locator) {
-        return locator ==~ /^[A-Z][A-Za-z0-9]*([_-][A-Za-z0-9]+)+$/
+        to.addProperty("name", ConditionType.EQUALS, locator)
     }
 
 }
